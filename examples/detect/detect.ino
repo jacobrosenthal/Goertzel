@@ -36,12 +36,12 @@ int led = 13;
 
 // Since arduino is a relatively slow in terms of audio, we sample literally as fast as we can
 // This is generally around ~8900hz for a 16mhz arduino and 4400hz for an 8mhz arduino. We estimate to 8900 here
-float sampling_freq=8900; 
+const float SAMPLING_FREQUENCY = 8900; 
 
 // ideally an integer of SAMPLING_FREQ/N to center the bins around your content so if you're
 // looking for 700hz frequency below and above it equally contribute. Read up on Kevin's article for more info
 // Nyquist says the highest frequency we can target is SAMPLING_FREQ/2 
-float target_freq=700.0; 
+const float TARGET_FREQUENCY = 700.0; 
 
 // if you're trying to detect several different drump hits all within low frequency like
 // ~100-200hz you'll need a small bin size like 25 or 50 to distinguish them.
@@ -52,14 +52,14 @@ float target_freq=700.0;
 // Ill set to a round divisor like 200 So 1900 to 2100 could trigger, but not less or more
 // Max is 200 as we have limited ram in the arduino, and sampling longer would make us less 
 // responsive anyway
-float n=100.0; 	
+const int N = 100.0; 	
 
 // This is what will trigger the led. Its INCREDIBLY squishy based on volume of your source, frequency, etc.
 // You'll just need to get in your environment and look at the serial console to see what numbers
 // You find and pick something that triggers pleasantly to your eye
-float threshold=4000;		
+const float THRESHOLD = 4000;		
 
-Goertzel goertzel = Goertzel(target_freq,n,sampling_freq);
+Goertzel goertzel = Goertzel(TARGET_FREQUENCY, N, SAMPLING_FREQUENCY);
 
 void setup(){
   pinMode(led, OUTPUT);     
@@ -72,7 +72,7 @@ void loop()
   
   float magnitude = goertzel.detect();  //check them for target_freq
   
-  if(magnitude>threshold) //if you're getting false hits or no hits adjust this
+  if(magnitude>THRESHOLD) //if you're getting false hits or no hits adjust this
     digitalWrite(led, HIGH); //if found, enable led
   else
     digitalWrite(led, LOW); //if not found, or lost, disable led
