@@ -16,7 +16,7 @@
   simply massaged it into an Arduino library. I recommend reading his article
   for a full description of whats going on behind the scenes.
 
-  Created by Jacob Rosenthal, June 20, 2012.
+  See Contributors.md and add yourself for pull requests
   Released into the public domain.
 */
 #include <Goertzel.h>
@@ -24,10 +24,14 @@
 int sensorPin = A0;
 int led = 13;
 
-float target_freq=440.0; //must be an integer of 9000/N and be less than
+
+float sampling_freq=8800; 	//on 16mhz, ~8928.57142857143, on 8mhz ~44444 
+							//But we want clean math so rounding to 8800 for a 4440 example
+							// with a bucket the size of 20
+
+float target_freq=440.0; //must be an integer of sampling_freq/N and be less than
                          //sampling_frequency/2 (thanks to Nyquist)
-float n=20.0;
-float sampling_freq=9000.0;
+float n=20.0; 			
 
 Goertzel goertzel = Goertzel(target_freq,n,sampling_freq);
 

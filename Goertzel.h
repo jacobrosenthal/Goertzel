@@ -12,7 +12,7 @@
   simply massaged it into an Arduino library. I recommend reading his article
   for a full description of whats going on behind the scenes.
 
-  Created by Jacob Rosenthal, June 20, 2012.
+  See Contributors.md and add yourself for pull requests
   Released into the public domain.
 */
 
@@ -36,7 +36,7 @@ class Goertzel
   // library-accessible "private" interface
   private:
 	void GetRealImag(float*,float*);
-	void ProcessSample(byte);
+	void ProcessSample(int);
 	void ResetGoertzel(void);
 	
 };

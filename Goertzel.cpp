@@ -30,7 +30,7 @@ float Q2;
 float sine;
 float cosine;
 
-byte testData[160];
+int testData[160];
 
 Goertzel::Goertzel(float TARGET_FREQUENCY, float BLOCK)
 {
@@ -71,10 +71,10 @@ void Goertzel::ResetGoertzel(void)
 
 
 /* Call this routine for every sample. */
-void Goertzel::ProcessSample(byte sample)
+void Goertzel::ProcessSample(int sample)
 {
   float Q0;
-  Q0 = coeff * Q1 - Q2 + (float) sample;
+  Q0 = coeff * Q1 - Q2 + (float) (sample - 512);
   Q2 = Q1;
   Q1 = Q0;
 }
@@ -94,7 +94,7 @@ void Goertzel::sample(int sensorPin)
 {
   for (int index = 0; index < N; index++)
   {
-    testData[index] = (byte) analogRead(sensorPin);
+    testData[index] = analogRead(sensorPin);
   }
 }
 
