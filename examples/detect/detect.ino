@@ -41,9 +41,9 @@ const float SAMPLING_FREQUENCY = 8900;
 // ideally an integer of SAMPLING_FREQ/N to center the bins around your content so if you're
 // looking for 700hz frequency below and above it equally contribute. Read up on Kevin's article for more info
 // Nyquist says the highest frequency we can target is SAMPLING_FREQ/2 
-const float TARGET_FREQUENCY = 700.0; 
+const float TARGET_FREQUENCY = 700; 
 
-// if you're trying to detect several different drump hits all within low frequency like
+// if you're trying to detect several different drum hits all within low frequency like
 // ~100-200hz you'll need a small bin size like 25 or 50 to distinguish them.
 // If however you're just trying to find ANY bass hit you might want something
 // basically equal to frequency youre looking for like ~100
@@ -52,7 +52,7 @@ const float TARGET_FREQUENCY = 700.0;
 // Ill set to a round divisor like 200 So 1900 to 2100 could trigger, but not less or more
 // Max is 200 as we have limited ram in the arduino, and sampling longer would make us less 
 // responsive anyway
-const int N = 100.0; 	
+const int N = 100; 	
 
 // This is what will trigger the led. Its INCREDIBLY squishy based on volume of your source, frequency, etc.
 // You'll just need to get in your environment and look at the serial console to see what numbers
