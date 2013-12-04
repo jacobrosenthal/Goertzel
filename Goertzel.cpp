@@ -44,9 +44,13 @@ Goertzel::Goertzel(float TARGET_FREQUENCY, float N, float SAMPLING_FREQUENCY)
   
   _SAMPLING_FREQUENCY=SAMPLING_FREQUENCY;	//on 16mhz, ~8928.57142857143, on 8mhz ~44444
   _TARGET_FREQUENCY=TARGET_FREQUENCY; //should be integer of SAMPLING_RATE/N
-  _N=N;	//Block size
+  if(N>MAXN){
+     _N=MAXN;
+  }else{
+    _N=N;
+  }
   
-  float  omega = (2.0 * PI * _TARGET_FREQUENCY) / _SAMPLING_FREQUENCY;
+  float omega = (2.0 * PI * _TARGET_FREQUENCY) / _SAMPLING_FREQUENCY;
 
   coeff = 2.0 * cos(omega);
 
