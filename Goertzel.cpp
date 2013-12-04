@@ -35,7 +35,7 @@ int testData[160];
 Goertzel::Goertzel(float TARGET_FREQUENCY, float BLOCK)
 {
 	#if F_CPU == 16000000L
-		Goertzel(TARGET_FREQUENCY, BLOCK, 9000.0);
+		Goertzel(TARGET_FREQUENCY, BLOCK, 8900.0);
 	#else 
 		Goertzel(TARGET_FREQUENCY, BLOCK, 4400.0);
 	#endif
@@ -45,18 +45,12 @@ Goertzel::Goertzel(float TARGET_FREQUENCY,float BLOCK,float SAMPLING_FREQ)
 {
   
   SAMPLING_RATE=SAMPLING_FREQ;	//on 16mhz, ~8928.57142857143, on 8mhz ~44444
-  TARGET=TARGET_FREQUENCY; //must be integer of SAMPLING_RATE/N
+  TARGET=TARGET_FREQUENCY; //should be integer of SAMPLING_RATE/N
   N=BLOCK;	//Block size
-  int	k;
-  float	floatN;
-  float	omega;
+  
+  float  omega = (2.0 * PI * TARGET) / SAMPLING_RATE;
 
-  floatN = (float) N;
-  k = (int) (0.5 + ((floatN * TARGET_FREQUENCY) / SAMPLING_RATE));
-  omega = (2.0 * PI * k) / floatN;
-  sine = sin(omega);
-  cosine = cos(omega);
-  coeff = 2.0 * cosine;
+  coeff = 2.0 * cos(omega);
 
   ResetGoertzel();
 }
@@ -80,15 +74,6 @@ void Goertzel::ProcessSample(int sample)
 }
 
 
-/* Basic Goertzel */
-/* Call this routine after every block to get the complex result. */
-void Goertzel::GetRealImag(float *realPart, float *imagPart)
-{
-  *realPart = (Q1 - Q2 * cosine);
-  *imagPart = (Q2 * sine);
-}
-
-
 /* Sample some test data. */
 void Goertzel::sample(int sensorPin)
 {
@@ -101,25 +86,16 @@ void Goertzel::sample(int sensorPin)
 
 float Goertzel::detect()
 {
-
-  int	index;
-
-  float	magnitudeSquared;
   float	magnitude;
-  float	real;
-  float	imag;
 
   /* Process the samples. */
-  for (index = 0; index < N; index++)
+  for (int index = 0; index < N; index++)
   {
     ProcessSample(testData[index]);
   }
 
   /* Do the "standard Goertzel" processing. */
-  GetRealImag(&real, &imag);
-
-  magnitudeSquared = real*real + imag*imag;
-  magnitude = sqrt(magnitudeSquared);
+  magnitude = sqrt(Q1*Q1 + Q2*Q2 - coeff*Q1*Q2);
 
   ResetGoertzel();
   return magnitude;
