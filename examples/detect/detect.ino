@@ -1,11 +1,11 @@
 /*
   Blinks built in pin13 LED on a 16mhz Arduino when it detects a 700 hz tone
-  which is inside of 1, 2, and 3 button on your phones keypad, but not the others.
+  which is inside of 1, 2, and 3 buttons (but not the others) on your phone's keypad, 
   Othwerise google for a tone generator on the web or an app for your phone.
   I like this one http://onlinetonegenerator.com/
   
   Frequency sampling is .. squishy business. Be prepared to mess with the
-  numbers below until you get something you
+  numbers below until you get something you like.
 
   This work is entirely based on the Kevin Banks code found at
   http://www.embedded.com/design/embedded/4024443/The-Goertzel-Algorithm
@@ -34,13 +34,10 @@
 int sensorPin = A0;
 int led = 13;
 
-// Since arduino is a relatively slow in terms of audio, we sample literally as fast as we can
-// This is generally around ~8900hz for a 16mhz arduino and 4400hz for an 8mhz arduino. We estimate to 8900 here
-const float SAMPLING_FREQUENCY = 8900; 
-
-// ideally an integer of SAMPLING_FREQ/N to center the bins around your content so if you're
-// looking for 700hz frequency below and above it equally contribute. Read up on Kevin's article for more info
-// Nyquist says the highest frequency we can target is SAMPLING_FREQ/2 
+// ideally an integer of SAMPLING_FREQUENCY/N to center the bins around your content so if you're
+// looking for 700hz, frequencies below and above it equally contribute. Read up on Kevin's article 
+// for more info.
+// Nyquist says the highest frequency we can target is SAMPLING_FREQUENCY/2 
 const float TARGET_FREQUENCY = 700; 
 
 // if you're trying to detect several different drum hits all within low frequency like
@@ -50,14 +47,19 @@ const float TARGET_FREQUENCY = 700;
  
 // If Im detecting a frequency much higher with no care about nearby tones, like 2000hz
 // Ill set to a round divisor like 200 So 1900 to 2100 could trigger, but not less or more
-// Max is 200 as we have limited ram in the arduino, and sampling longer would make us less 
+// Max is 200 as we have limited ram in the Arduino, and sampling longer would make us less 
 // responsive anyway
 const int N = 100; 	
 
-// This is what will trigger the led. Its INCREDIBLY squishy based on volume of your source, frequency, etc.
-// You'll just need to get in your environment and look at the serial console to see what numbers
-// You find and pick something that triggers pleasantly to your eye
-const float THRESHOLD = 4000;		
+// This is what will trigger the led. Its INCREDIBLY squishy based on volume of your source, 
+// frequency, etc. You'll just need to get in your environment and look at the serial console
+// to start. Then pick something that triggers pleasantly to your eye.
+const float THRESHOLD = 4000;	
+
+// Since Arduino is a relatively slow in terms of audio, we sample literally as fast as we can
+// This is generally around ~8900hz for a 16mhz Arduino and 4400hz for an 8mhz Arduino.
+// You're basically stuck with this number as its the physical limitations of the hardware.
+const float SAMPLING_FREQUENCY = 8900; 
 
 Goertzel goertzel = Goertzel(TARGET_FREQUENCY, N, SAMPLING_FREQUENCY);
 
