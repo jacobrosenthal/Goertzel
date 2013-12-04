@@ -21,32 +21,32 @@
 // include this library's description file
 #include "Goertzel.h"
 
-float SAMPLING_RATE;
-float TARGET;
-int N;
+float _SAMPLING_FREQUENCY;
+float _TARGET_FREQUENCY;
+int _N;
 float coeff;
 float Q1;
 float Q2;
 
 int testData[MAXN];
 
-Goertzel::Goertzel(float TARGET_FREQUENCY, float BLOCK)
+Goertzel::Goertzel(float TARGET_FREQUENCY, float N)
 {
 	#if F_CPU == 16000000L
-		Goertzel(TARGET_FREQUENCY, BLOCK, 8900.0);
+		Goertzel(TARGET_FREQUENCY, N, 8900.0);
 	#else 
-		Goertzel(TARGET_FREQUENCY, BLOCK, 4400.0);
+		Goertzel(TARGET_FREQUENCY, N, 4400.0);
 	#endif
 }
 
-Goertzel::Goertzel(float TARGET_FREQUENCY,float BLOCK,float SAMPLING_FREQ)
+Goertzel::Goertzel(float TARGET_FREQUENCY, float N, float SAMPLING_FREQUENCY)
 {
   
-  SAMPLING_RATE=SAMPLING_FREQ;	//on 16mhz, ~8928.57142857143, on 8mhz ~44444
-  TARGET=TARGET_FREQUENCY; //should be integer of SAMPLING_RATE/N
-  N=BLOCK;	//Block size
+  _SAMPLING_FREQUENCY=SAMPLING_FREQUENCY;	//on 16mhz, ~8928.57142857143, on 8mhz ~44444
+  _TARGET_FREQUENCY=TARGET_FREQUENCY; //should be integer of SAMPLING_RATE/N
+  _N=N;	//Block size
   
-  float  omega = (2.0 * PI * TARGET) / SAMPLING_RATE;
+  float  omega = (2.0 * PI * _TARGET_FREQUENCY) / _SAMPLING_FREQUENCY;
 
   coeff = 2.0 * cos(omega);
 
@@ -75,7 +75,7 @@ void Goertzel::ProcessSample(int sample)
 /* Sample some test data. */
 void Goertzel::sample(int sensorPin)
 {
-  for (int index = 0; index < N; index++)
+  for (int index = 0; index < _N; index++)
   {
     testData[index] = analogRead(sensorPin);
   }
@@ -87,7 +87,7 @@ float Goertzel::detect()
   float	magnitude;
 
   /* Process the samples. */
-  for (int index = 0; index < N; index++)
+  for (int index = 0; index < _N; index++)
   {
     ProcessSample(testData[index]);
   }
