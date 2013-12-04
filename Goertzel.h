@@ -23,6 +23,9 @@
 // include types & constants of Wiring core API
 #include "Arduino.h"
 
+#define MAXN 200
+#define ADCCENTER 512
+
 // library interface description
 class Goertzel
 {

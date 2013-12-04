@@ -27,10 +27,8 @@ int N;
 float coeff;
 float Q1;
 float Q2;
-float sine;
-float cosine;
 
-int testData[160];
+int testData[MAXN];
 
 Goertzel::Goertzel(float TARGET_FREQUENCY, float BLOCK)
 {
@@ -68,7 +66,7 @@ void Goertzel::ResetGoertzel(void)
 void Goertzel::ProcessSample(int sample)
 {
   float Q0;
-  Q0 = coeff * Q1 - Q2 + (float) (sample - 512);
+  Q0 = coeff * Q1 - Q2 + (float) (sample - ADCCENTER);
   Q2 = Q1;
   Q1 = Q0;
 }
