@@ -52,7 +52,12 @@ float target_freq=700.0;
 // Ill set to a round divisor like 200 So 1900 to 2100 could trigger, but not less or more
 // Max is 200 as we have limited ram in the arduino, and sampling longer would make us less 
 // responsive anyway
-float n=100.0; 			
+float n=100.0; 	
+
+// This is what will trigger the led. Its INCREDIBLY squishy based on volume of your source, frequency, etc.
+// You'll just need to get in your environment and look at the serial console to see what numbers
+// You find and pick something that triggers pleasantly to your eye
+float threshold=4000;		
 
 Goertzel goertzel = Goertzel(target_freq,n,sampling_freq);
 
@@ -67,7 +72,7 @@ void loop()
   
   float magnitude = goertzel.detect();  //check them for target_freq
   
-  if(magnitude>1000) //if you're getting false hits or no hits adjust this
+  if(magnitude>threshold) //if you're getting false hits or no hits adjust this
     digitalWrite(led, HIGH); //if found, enable led
   else
     digitalWrite(led, LOW); //if not found, or lost, disable led
