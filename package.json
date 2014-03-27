@@ -1,0 +1,24 @@
+{
+  "name": "Goertzel",
+  "version": "0.1.0",
+  "description": "Arduino Library implementation of the Goertzel algorithm ",
+  "main": "Goertzel.cpp",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jacobrosenthal/Goertzel.git"
+  },
+  "keywords": [
+    "arduino-libarary"
+  ],
+  "author": "Jacob Rosenthal",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jacobrosenthal/Goertzel/issues"
+  }
+}
