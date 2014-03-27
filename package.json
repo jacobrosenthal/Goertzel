@@ -1,5 +1,5 @@
 {
-  "name": "Goertzel",
+  "name": "goertzel-arduino",
   "version": "0.1.0",
   "description": "Arduino Library implementation of the Goertzel algorithm ",
   "main": "Goertzel.cpp",
