@@ -7,7 +7,7 @@
   occurrence of all frequencies.
   
   This work is entirely based on the Kevin Banks code found at
-  http://www.eetimes.com/design/embedded/4024443/The-Goertzel-Algorithm 
+  http://www.embedded.com/design/configurable-systems/4024443/The-Goertzel-Algorithm 
   so full credit to him for his generic implementation and breakdown. I've
   simply massaged it into an Arduino library. I recommend reading his article
   for a full description of whats going on behind the scenes.
