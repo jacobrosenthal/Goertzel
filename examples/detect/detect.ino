@@ -56,9 +56,15 @@ const int N = 100;
 // to start. Then pick something that triggers pleasantly to your eye.
 const float THRESHOLD = 4000;	
 
-// Since Arduino is a relatively slow in terms of audio, we sample literally as fast as we can
+// Again, the highest frequency we can target is SAMPLING_FREQUENCY/2. So Since Arduino is 
+// relatively slow in terms of audio, we sample literally as fast as we can
 // This is generally around ~8900hz for a 16mhz Arduino and 4400hz for an 8mhz Arduino.
-// You're basically stuck with this number as its the physical limitations of the hardware.
+// User nicola points out these rates are for stock arduino firmware and that on a board 
+// by board basis you can juice the adc rates. For Arduino Uno you could move that rate up to 
+// 22khz by adding somthing like this to your setup:
+//  _SFR_BYTE(ADCSRA) |=  _BV(ADPS2); // Set ADPS2
+//  _SFR_BYTE(ADCSRA) &= ~_BV(ADPS1); // Clear ADPS1
+//  _SFR_BYTE(ADCSRA) &= ~_BV(ADPS0); // Clear ADPS0
 const float SAMPLING_FREQUENCY = 8900; 
 
 Goertzel goertzel = Goertzel(TARGET_FREQUENCY, N, SAMPLING_FREQUENCY);
