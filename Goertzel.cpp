@@ -23,10 +23,13 @@
 
 float _SAMPLING_FREQUENCY;
 float _TARGET_FREQUENCY;
-int _N;
+float _N;
 float coeff;
 float Q1;
 float Q2;
+float sine;
+float cosine;
+
 
 int testData[MAXN];
 
@@ -49,10 +52,12 @@ Goertzel::Goertzel(float TARGET_FREQUENCY, float N, float SAMPLING_FREQUENCY)
   }else{
     _N=N;
   }
-  
+  int k;
   float omega = (2.0 * PI * _TARGET_FREQUENCY) / _SAMPLING_FREQUENCY;
-
-  coeff = 2.0 * cos(omega);
+  k = (int) (N * (_TARGET_FREQUENCY/ _SAMPLING_FREQUENCY) + 0.93);
+  sine = sin(omega);
+  cosine = cos(omega);
+  coeff = 2.0 * cosine;
 
   ResetGoertzel();
 }
